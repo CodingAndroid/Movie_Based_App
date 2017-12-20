@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="splash_background">
+        <item>file:///android_asset/splash_01.jpg</item>
+        <item>file:///android_asset/splash_02.jpg</item>
+        <item>file:///android_asset/splash_03.jpg</item>
+        <item>file:///android_asset/splash_04.jpg</item>
+    </array>
+</resources>

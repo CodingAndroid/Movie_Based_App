@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">熊猫视频</string>
+
+    <string name="main_tab_home">首页</string>
+    <string name="main_tab_find">头条</string>
+    <string name="main_tab_movie">视频</string>
+    <string name="main_tab_me">我</string>
+    <string name="login">登录</string>
+    <string name="me_history">观看历史</string>
+    <string name="me_collection">我的收藏</string>
+    <string name="me_offline">离线中心</string>
+    <string name="me_wallet">我的钱包</string>
+    <string name="me_order">订单中心</string>
+    <string name="me_game">游戏中心</string>
+    <string name="me_upload">文件上传</string>
+    <string name="me_subscribe">订阅中心</string>
+    <string name="me_skin">我的皮肤</string>
+    <string name="me_movie">免费视频</string>
+    <string name="me_setting">设置中心</string>
+    <string name="me_feedback">帮助反馈</string>
+
+    <string name="scan">扫一扫</string>
+    <string name="pay">付钱</string>
+    <string name="gather">收钱</string>
+    <string name="packages">卡包</string>
+
+    <string name="huabei">花呗</string>
+    <string name="transfer_accounts">转账</string>
+    <string name="re_charge">充值</string>
+    <string name="tickets">火车票机票</string>
+    <string name="yu_ebao">余额宝</string>
+    <string name="express">我的快递</string>
+    <string name="credit_card">信用卡还款</string>
+    <string name="ant_fortune">蚂蚁财富</string>
+    <string name="tao_ticket">淘票票</string>
+    <string name="bike_sharing">共享单车</string>
+    <string name="urban_service">城市服务</string>
+    <string name="more">更多</string>
+
+    <string name="content_to_request_permission">保证应用正常运行，请授予必要权限！</string>
+    <string name="attention">提示</string>
+    <string name="ok">好的~</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#E5E5E5</color>
+    <color name="main_red">#f94848</color>
+    <color name="main_blue">#1296db</color>
+    <color name="main_red_80">#aef94848</color>
+    <color name="main_red_50">#77f94848</color>
+    <color name="main_gray">#9A9A9A</color>
+    <color name="main_black">#353535</color>
+    <color name="main_purple">#576B95</color>
+    <color name="actionbar_background">@color/main_red</color>
+    <color name="window_background">#EBEBEB</color>
+    <color name="primarybar_background">#FCFCFC</color>
+
+    <!--分割线颜色-->
+    <color name="primarybar_split_color">#D6D6D6</color>
+    <!--<color name="tab_text_gray1">#999999</color>-->
+    <color name="tab_text_gray">#bfbfbf</color>
+</resources>
