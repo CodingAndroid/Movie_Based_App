@@ -5,12 +5,27 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="false"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginBottom="58dp">
 
     <GridView
         android:paddingTop="1dp"
         android:paddingBottom="1dp"
         android:id="@+id/sub_grid"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:numColumns="3"
+        android:background="@color/gray"
+        android:horizontalSpacing="1dp"
+        android:verticalSpacing="1dp"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_movie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <GridView
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:id="@+id/grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numColumns="3"

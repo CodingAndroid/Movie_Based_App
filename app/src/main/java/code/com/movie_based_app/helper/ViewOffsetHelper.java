@@ -1,11 +1,11 @@
-package code.com.movie_based_app.behavior;
+package code.com.movie_based_app.helper;
 
 import android.os.Build;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewParent;
 
-/**
+/**Copy from Android design library
  * Created by lihui1 on 2017/12/19.
  */
 

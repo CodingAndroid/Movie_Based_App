@@ -1,4 +1,4 @@
-package code.com.movie_based_app.behavior;
+package code.com.movie_based_app.helper;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;

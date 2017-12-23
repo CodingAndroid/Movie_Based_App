@@ -1,16 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@id/id_news_header_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_light"
+        android:orientation="vertical"
+        app:layout_behavior="code.com.movie_based_app.behavoir.NewsHeaderPagerBehavior">
+
+        <TextView
+            android:id="@+id/news_tv_header_pager"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="250dip"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:padding="12dip"
+            android:text="WeatherPager"
+            android:textColor="@android:color/white"/>
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/news_header_title_height"
+        android:layout_marginTop="@dimen/news_header_title_init_offset"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        app:layout_behavior="code.com.movie_based_app.behavoir.NewsTitleBehavior">
+
+        <TextView
+            android:id="@+id/news_title_tv"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="12dip"
+            android:paddingRight="12dip"
+            android:text="UC头条"
+            android:textColor="@android:color/white"/>
+
+        <ImageView
+            android:id="@+id/iv_github"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dip"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_gravity="right|center_vertical"
+            android:padding="3dip"
+            android:src="@drawable/transfer_accounts"/>
+    </FrameLayout>
     <code.com.movie_based_app.views.SlidingTabLayout
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+        android:layout_height="@dimen/news_tabs_height"
+        app:layout_behavior="code.com.movie_based_app.behavoir.NewsTabBehavior"/>
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1.0"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        app:layout_behavior="code.com.movie_based_app.behavoir.NewsContentBehavior"/>
+</android.support.design.widget.CoordinatorLayout>

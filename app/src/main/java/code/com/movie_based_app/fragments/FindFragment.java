@@ -3,9 +3,13 @@ package code.com.movie_based_app.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,20 +22,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import code.com.movie_based_app.BuildConfig;
 import code.com.movie_based_app.R;
+import code.com.movie_based_app.adapter.NewsAdapter;
+import code.com.movie_based_app.behavoir.NewsHeaderPagerBehavior;
 import code.com.movie_based_app.views.SlidingTabLayout;
 
 /**
  * Created by lihui1 on 2017/12/14.
  */
 
-public class FindFragment extends Fragment{
+public class FindFragment extends Fragment implements NewsHeaderPagerBehavior.OnPagerStateListener{
+
+    private static final String TAG = "FindFragment";
 
     private ViewPager mViewPager;
 
     private SlidingTabLayout mSlidingTabLayout;
 
-    private TextView mContent;
+    private RecyclerView mReContent;
+
+    private List<String> data;
+
+    private NewsHeaderPagerBehavior mPagerBehavior;
 
 
 
@@ -49,9 +62,34 @@ public class FindFragment extends Fragment{
         mSlidingTabLayout = (SlidingTabLayout) mView.findViewById(R.id.sliding_tabs);
         int color = getResources().getColor(R.color.main_red);
         mSlidingTabLayout.setSelectedIndicatorColors(color);
+        mSlidingTabLayout.setLayoutMode(1);
         mSlidingTabLayout.setViewPager(mViewPager);
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.view_pager_margin));
+        mPagerBehavior = (NewsHeaderPagerBehavior) ((CoordinatorLayout.LayoutParams)mView.findViewById(R.id.id_news_header_pager).getLayoutParams()).getBehavior();
+        mPagerBehavior.setPagerStateListener(this);
         return mView;
+    }
+
+    private List<String> getData(){
+        data = new ArrayList<>();
+        for (int i = 0;i<20;i++){
+            data.add("java"+i);
+        }
+        return data;
+    }
+
+    @Override
+    public void onPagerClosed() {
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "onPagerClosed: ");
+        }
+        Snackbar.make(mViewPager, "onPagerClosed", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPagerOpened() {
+        Log.d(TAG, "onPagerOpened: ");
+        Snackbar.make(mViewPager, "pager opened", Snackbar.LENGTH_SHORT).show();
     }
 
 
@@ -69,10 +107,12 @@ public class FindFragment extends Fragment{
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            mContent = new TextView(getActivity());
-            mContent.setText("hello");
-            container.addView(mContent);
-            return mContent;
+            mReContent = new RecyclerView(getActivity());
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+            mReContent.setLayoutManager(layoutManager);
+            mReContent.setAdapter(new NewsAdapter(getData()));
+            container.addView(mReContent);
+            return mReContent;
         }
 
         @Override

@@ -1,6 +1,6 @@
-package code.com.movie_based_app.behavior;
+package code.com.movie_based_app.helper;
 
-/**
+/**Copy from Android design library
  * Created by lihui1 on 2017/12/19.
  */
 

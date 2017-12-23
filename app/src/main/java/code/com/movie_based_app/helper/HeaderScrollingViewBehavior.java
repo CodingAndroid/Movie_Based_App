@@ -1,4 +1,4 @@
-package code.com.movie_based_app.behavior;
+package code.com.movie_based_app.helper;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -13,11 +13,12 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-/**
+/**Copy from Android design library
  * Created by lihui1 on 2017/12/20.
  */
 
 public abstract class HeaderScrollingViewBehavior extends ViewOffsetBehavior<View>{
+
     private final Rect mTempRect1 = new Rect();
     private final Rect mTempRect2 = new Rect();
 

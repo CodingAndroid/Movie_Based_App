@@ -15,7 +15,7 @@
     <color name="actionbar_background">@color/main_red</color>
     <color name="window_background">#EBEBEB</color>
     <color name="primarybar_background">#FCFCFC</color>
-
+    <color name="movie_card_color">#4FE5BE</color>
     <!--分割线颜色-->
     <color name="primarybar_split_color">#D6D6D6</color>
     <!--<color name="tab_text_gray1">#999999</color>-->

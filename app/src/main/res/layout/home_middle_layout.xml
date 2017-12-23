@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="58dp">
-    <code.com.movie_based_app.widgets.ImageBanner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -15,19 +8,18 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
             <ImageView
                 android:id="@+id/img_read"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/read"
-                android:layout_centerHorizontal="true"/>
-            <TextView
-                android:layout_below="@+id/img_read"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="精品阅读"
-                android:layout_centerHorizontal="true"/>
+                android:src="@drawable/read"/>
+           <TextView
+               android:layout_below="@+id/img_read"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="阅读"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -38,14 +30,12 @@
                 android:id="@+id/img_reco"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/reco"
-                android:layout_centerHorizontal="true"/>
+                android:src="@drawable/reco"/>
             <TextView
                 android:layout_below="@+id/img_reco"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="每日推荐"
-                android:layout_centerHorizontal="true"/>
+                android:text="阅读"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -56,14 +46,12 @@
                 android:id="@+id/img_music"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/music"
-                android:layout_centerHorizontal="true"/>
+                android:src="@drawable/music"/>
             <TextView
                 android:layout_below="@+id/img_music"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="优质音乐"
-                android:layout_centerHorizontal="true"/>
+                android:text="阅读"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -74,18 +62,12 @@
                 android:id="@+id/img_rank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/rank"
-                android:layout_centerHorizontal="true"/>
+                android:src="@drawable/rank"/>
             <TextView
                 android:layout_below="@+id/img_rank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="排行榜"
-                android:layout_centerHorizontal="true"/>
+                android:text="阅读"/>
         </RelativeLayout>
     </LinearLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rcy"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+</layout>

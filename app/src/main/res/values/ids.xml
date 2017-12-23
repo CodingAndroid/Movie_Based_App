@@ -5,4 +5,6 @@
 
     <item name="alipay_bar" type="id"/>
     <item name="alipay_snap" type="id"/>
+
+    <item name="id_news_header_pager" type="id"></item>
 </resources>

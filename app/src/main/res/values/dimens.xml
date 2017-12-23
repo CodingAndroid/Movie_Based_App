@@ -8,4 +8,9 @@
     <dimen name="bottom_fab">140dp</dimen>
     <dimen name="weibo_header_height">200dp</dimen>
     <dimen name="weibo_header_offset">-200dp</dimen>
+
+    <dimen name="news_header_title_height">45dip</dimen>
+    <dimen name="news_header_title_init_offset">-45dip</dimen>
+    <dimen name="news_header_pager_offset">-90dip</dimen>
+    <dimen name="news_tabs_height">45dip</dimen>
 </resources>

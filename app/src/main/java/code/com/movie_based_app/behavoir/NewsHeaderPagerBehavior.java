@@ -1,7 +1,6 @@
-package code.com.movie_based_app.behavior;
+package code.com.movie_based_app.behavoir;
 
 import android.content.Context;
-import android.support.design.BuildConfig;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -12,41 +11,41 @@ import android.widget.OverScroller;
 
 import java.lang.ref.WeakReference;
 
+import code.com.movie_based_app.BuildConfig;
 import code.com.movie_based_app.MovieApp;
+import code.com.movie_based_app.R;
+import code.com.movie_based_app.helper.ViewOffsetBehavior;
 
 /**
- * Created by lihui1 on 2017/12/19.
+ * Created by lihui1 on 2017/12/20.
  */
 
-/**
- * 头部的实现
- */
-
-public class WeiboHeaderPagerBehavior extends ViewOffsetBehavior{
-
+public class NewsHeaderPagerBehavior extends ViewOffsetBehavior{
+    private static final String TAG = "UcNewsHeaderPager";
     public static final int STATE_OPENED = 0;
     public static final int STATE_CLOSED = 1;
     public static final int DURATION_SHORT = 300;
     public static final int DURATION_LONG = 600;
 
     private int mCurState = STATE_OPENED;
-    private OnPageStateListener mOnPageStateListener;
+    private OnPagerStateListener mPagerStateListener;
 
     private OverScroller mOverScroller;
 
     private WeakReference<CoordinatorLayout> mParent;
     private WeakReference<View> mChild;
 
-    public void setOnPageStateListener(OnPageStateListener onPageStateListener){
-        this.mOnPageStateListener = onPageStateListener;
+
+    public void setPagerStateListener(OnPagerStateListener pagerStateListener) {
+        mPagerStateListener = pagerStateListener;
     }
 
-    public WeiboHeaderPagerBehavior() {
+    public NewsHeaderPagerBehavior() {
         init();
     }
 
 
-    public WeiboHeaderPagerBehavior(Context context, AttributeSet attrs) {
+    public NewsHeaderPagerBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -55,6 +54,12 @@ public class WeiboHeaderPagerBehavior extends ViewOffsetBehavior{
         mOverScroller = new OverScroller(MovieApp.getAppContext());
     }
 
+    /**
+     * 重写列表页layoutChild
+     * @param parent
+     * @param child
+     * @param layoutDirection
+     */
     @Override
     protected void layoutChild(CoordinatorLayout parent, View child, int layoutDirection) {
         super.layoutChild(parent, child, layoutDirection);
@@ -62,137 +67,95 @@ public class WeiboHeaderPagerBehavior extends ViewOffsetBehavior{
         mChild = new WeakReference<View>(child);
     }
 
-    /**
-     * 1.确保只拦截垂直方向上的滚动事件, 且当前状态是打开的并且还可以继续向上收缩的时候还会拦截
-     * @param coordinatorLayout
-     * @param child
-     * @param directTargetChild
-     * @param target
-     * @param nestedScrollAxes
-     * @return
-     */
     @Override
     public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
-        if (BuildConfig.DEBUG){
-            Log.d("TAG", "nestedScrollAxes"+nestedScrollAxes);
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "onStartNestedScroll: ");
         }
-        boolean canScroll = canScroll(child, 0);
-        return (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0 && canScroll && !isClosed(child);
+        return (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0 && canScroll(child, 0) && !isClosed(child);
     }
 
-    /**
-     * 需要处理Fling事件, 在页面没有完全关闭的时候, 消费所有fling事件
-     * @param coordinatorLayout
-     * @param child
-     * @param target
-     * @param velocityX
-     * @param velocityY
-     * @return
-     */
+
     @Override
     public boolean onNestedPreFling(CoordinatorLayout coordinatorLayout, View child, View target, float velocityX, float velocityY) {
-        boolean consumed = !isClosed(child);
-        Log.d("TAG", "consumed="+consumed);
-        return consumed;
+        // consumed the flinging behavior until Closed
+        return !isClosed(child);
     }
 
-    @Override
-    public boolean onNestedFling(CoordinatorLayout coordinatorLayout, View child, View target, float velocityX, float velocityY, boolean consumed) {
-        Log.d("TAG", "velocityY="+velocityY);
-        return super.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
-    }
 
-    /**
-     * 区分页面状态是open还是close状态是通过Header是否移除屏幕来区分的,
-     * 即child.getTranslationY() == getHeaderOffsetRange()
-     * @param child
-     * @return
-     */
-    private boolean isClosed(View child){
+    private boolean isClosed(View child) {
         boolean isClosed = child.getTranslationY() == getHeaderOffsetRange();
         return isClosed;
     }
 
-    public boolean isClosed(){
+    public boolean isClosed() {
         return mCurState == STATE_CLOSED;
     }
 
-    private void changeState(int newState){
-        if (mCurState != newState){
+
+    private void changeState(int newState) {
+        if (mCurState != newState) {
             mCurState = newState;
-            if (mCurState == STATE_OPENED){
-                if (mOnPageStateListener != null){
-                    mOnPageStateListener.onPageOpened();
-                }
+            if (mCurState == STATE_OPENED) {
+                mPagerStateListener.onPagerOpened();
             } else {
-                if (mOnPageStateListener != null){
-                    mOnPageStateListener.onPageClosed();
-                }
+                mPagerStateListener.onPagerClosed();
             }
         }
+
     }
 
-    /**
-     * 2.拦截之后, 需要在滑动之前消耗事件, 并且移动Header, 让其向上便宜
-     * @param coordinatorLayout
-     * @param child
-     * @param target
-     * @param dx
-     * @param dy
-     * @param consumed
-     */
-    @Override
-    public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dx, int dy, int[] consumed) {
-        super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
-        Log.d("TAG", "dy="+dy);
-        float halfOfDis = dy;
-        if (!canScroll(child, halfOfDis)){
-            child.setTranslationY(halfOfDis > 0 ? getHeaderOffsetRange() : 0);
-        } else {
-            child.setTranslationY(child.getTranslationY() - halfOfDis);
-        }
-        consumed[1] = dy;
-    }
-
-
-
-    protected boolean canScroll(View child, float pendingDy){
+    private boolean canScroll(View child, float pendingDy) {
         int pendingTranslationY = (int) (child.getTranslationY() - pendingDy);
-        int headerOffsetRange = getHeaderOffsetRange();
-        if (pendingTranslationY >= headerOffsetRange && pendingTranslationY <= 0){
+        if (pendingTranslationY >= getHeaderOffsetRange() && pendingTranslationY <= 0) {
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean onInterceptTouchEvent(CoordinatorLayout parent, View child, MotionEvent ev) {
-        boolean closed = isClosed();
-        Log.d("TAG", "closed="+closed);
-        if (ev.getAction() == MotionEvent.ACTION_UP && !closed){
+    public boolean onInterceptTouchEvent(CoordinatorLayout parent, final View child, MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_UP && !isClosed()) {
             handleActionUp(parent, child);
         }
         return super.onInterceptTouchEvent(parent, child, ev);
     }
 
-    private void handleActionUp(CoordinatorLayout parent, View child) {
-        if (BuildConfig.DEBUG){
-            Log.d("TAG", "handleActionUp:");
+    @Override
+    public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dx, int dy, int[] consumed) {
+        super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
+        //dy>0 scroll up;dy<0,scroll down
+        float halfOfDis = dy / 4.0f;
+        if (!canScroll(child, halfOfDis)) {
+            child.setTranslationY(halfOfDis > 0 ? getHeaderOffsetRange() : 0);
+        } else {
+            child.setTranslationY(child.getTranslationY() - halfOfDis);
         }
-        if (mFlingRunnable != null){
+        //consumed all scroll behavior after we started Nested Scrolling
+        consumed[1] = dy;
+    }
+
+
+    private int getHeaderOffsetRange() {
+        return MovieApp.getAppContext().getResources().getDimensionPixelOffset(R.dimen.news_header_pager_offset);
+    }
+
+
+    private void handleActionUp(CoordinatorLayout parent, final View child) {
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "handleActionUp: ");
+        }
+        if (mFlingRunnable != null) {
             child.removeCallbacks(mFlingRunnable);
             mFlingRunnable = null;
         }
         mFlingRunnable = new FlingRunnable(parent, child);
-        if (child.getTranslationY() < getHeaderOffsetRange() / 6.0f){
+        if (child.getTranslationY() < getHeaderOffsetRange() / 3.0f) {
             mFlingRunnable.scrollToClosed(DURATION_SHORT);
         } else {
             mFlingRunnable.scrollToOpen(DURATION_SHORT);
         }
-    }
 
-    private int getHeaderOffsetRange() {
-        return -200;
     }
 
     private void onFlingFinished(CoordinatorLayout coordinatorLayout, View layout) {
@@ -239,14 +202,19 @@ public class WeiboHeaderPagerBehavior extends ViewOffsetBehavior{
         }
     }
 
+
     private FlingRunnable mFlingRunnable;
 
-    private class FlingRunnable implements Runnable{
-
+    /**
+     * For animation , Why not use {@link android.view.ViewPropertyAnimator } to play animation is of the
+     * other {@link android.support.design.widget.CoordinatorLayout.Behavior} that depend on this could not receiving the correct result of
+     * {@link View#getTranslationY()} after animation finished for whatever reason that i don't know
+     */
+    private class FlingRunnable implements Runnable {
         private final CoordinatorLayout mParent;
         private final View mLayout;
 
-        FlingRunnable(CoordinatorLayout parent, View layout){
+        FlingRunnable(CoordinatorLayout parent, View layout) {
             mParent = parent;
             mLayout = layout;
         }
@@ -255,21 +223,18 @@ public class WeiboHeaderPagerBehavior extends ViewOffsetBehavior{
             float curTranslationY = ViewCompat.getTranslationY(mLayout);
             float dy = getHeaderOffsetRange() - curTranslationY;
             if (BuildConfig.DEBUG) {
-                Log.d("TAG", "scrollToClosed:offest:" + getHeaderOffsetRange());
-                Log.d("TAG", "scrollToClosed: cur0:" + curTranslationY + ",end0:" + dy);
-                Log.d("TAG", "scrollToClosed: cur:" + Math.round(curTranslationY) + ",end:" + Math
-                        .round(dy));
-                Log.d("TAG", "scrollToClosed: cur1:" + (int) (curTranslationY) + ",end:" + (int) dy);
+                Log.d(TAG, "scrollToClosed:offest:" + getHeaderOffsetRange());
+                Log.d(TAG, "scrollToClosed: cur0:" + curTranslationY + ",end0:" + dy);
+                Log.d(TAG, "scrollToClosed: cur:" + Math.round(curTranslationY) + ",end:" + Math.round(dy));
+                Log.d(TAG, "scrollToClosed: cur1:" + (int) (curTranslationY) + ",end:" + (int) dy);
             }
-            mOverScroller.startScroll(0, Math.round(curTranslationY - 0.1f), 0, Math.round(dy +
-                    0.1f), duration);
+            mOverScroller.startScroll(0, Math.round(curTranslationY - 0.1f), 0, Math.round(dy + 0.1f), duration);
             start();
         }
 
         public void scrollToOpen(int duration) {
             float curTranslationY = ViewCompat.getTranslationY(mLayout);
-            mOverScroller.startScroll(0, (int) curTranslationY, 0, (int) -curTranslationY,
-                    duration);
+            mOverScroller.startScroll(0, (int) curTranslationY, 0, (int) -curTranslationY, duration);
             start();
         }
 
@@ -281,12 +246,14 @@ public class WeiboHeaderPagerBehavior extends ViewOffsetBehavior{
                 onFlingFinished(mParent, mLayout);
             }
         }
+
+
         @Override
         public void run() {
             if (mLayout != null && mOverScroller != null) {
                 if (mOverScroller.computeScrollOffset()) {
                     if (BuildConfig.DEBUG) {
-                        Log.d("TAG", "run: " + mOverScroller.getCurrY());
+                        Log.d(TAG, "run: " + mOverScroller.getCurrY());
                     }
                     ViewCompat.setTranslationY(mLayout, mOverScroller.getCurrY());
                     ViewCompat.postOnAnimation(mLayout, this);
@@ -297,12 +264,18 @@ public class WeiboHeaderPagerBehavior extends ViewOffsetBehavior{
         }
     }
 
-    public interface OnPageStateListener{
+    /**
+     * callback for HeaderPager 's state
+     */
+    public interface OnPagerStateListener {
         /**
-         * 回调
+         * do callback when pager closed
          */
-        void onPageClosed();
+        void onPagerClosed();
 
-        void onPageOpened();
+        /**
+         * do callback when pager opened
+         */
+        void onPagerOpened();
     }
 }

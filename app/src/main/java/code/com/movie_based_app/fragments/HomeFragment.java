@@ -130,7 +130,7 @@ public class HomeFragment extends Fragment{
             }
         });
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addItemDecoration(new SpacesItemDecoration(2));
+        mRecyclerView.addItemDecoration(new SpacesItemDecoration(1));
         mAdapter = new MusicAdapter(mList, getActivity());
         mRecyclerView.setAdapter(mAdapter);
         return view;
