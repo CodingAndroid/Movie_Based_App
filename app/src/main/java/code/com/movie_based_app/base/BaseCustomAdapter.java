@@ -48,7 +48,6 @@ public abstract class BaseCustomAdapter<T> extends BaseAdapter{
 
         //抽象出 ViewHolder 让用户去实现填充数据
         bindData(holder, t);
-
         return holder.getConvertView();
     }
 

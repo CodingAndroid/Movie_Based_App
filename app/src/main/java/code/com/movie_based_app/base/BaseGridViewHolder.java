@@ -1,12 +1,15 @@
 package code.com.movie_based_app.base;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Checkable;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,13 +22,13 @@ import code.com.movie_based_app.MovieApp;
  * Created by lihui1 on 2017/12/22.
  */
 
-public class BaseGridViewHolder {
+public class BaseGridViewHolder{
 
     private final View mConvertView;
 
     private SparseArray<View> mViews;
 
-    private int mPosition;
+    public int mPosition;
 
     public BaseGridViewHolder(Context context, ViewGroup parent, int layoutId, int position) {
         this.mViews = new SparseArray<View>();
@@ -159,15 +162,6 @@ public class BaseGridViewHolder {
         return this;
     }
 
-    /**
-     * 点击事件
-     */
-    public BaseGridViewHolder setOnClickListener(int viewId,View.OnClickListener listener)
-    {
-        View view = getView(viewId);
-        view.setOnClickListener(listener);
-        return this;
-    }
 
     /**
      * 触摸事件
@@ -188,4 +182,5 @@ public class BaseGridViewHolder {
         view.setOnLongClickListener(listener);
         return this;
     }
+
 }

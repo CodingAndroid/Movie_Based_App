@@ -13,6 +13,7 @@ public class Movie {
     public String subtype;
     public String year;
     public MovieImage images;
+    public String id;
 
     public static class Rate{
         public int max;

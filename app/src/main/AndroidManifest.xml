@@ -15,16 +15,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SplashActivity"
-            android:screenOrientation="portrait">
-        </activity>
+        <activity
+            android:name=".activities.SplashActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.MovieDetailActivity" />
+        <activity android:name=".activities.TopMovieDetailActivity" />
+        <activity android:name=".activities.BookSearchActivity"></activity>
     </application>
 
 </manifest>

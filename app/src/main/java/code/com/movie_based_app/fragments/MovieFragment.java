@@ -1,7 +1,6 @@
 package code.com.movie_based_app.fragments;
 
-import android.content.ClipData;
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,7 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,20 +26,16 @@ import java.util.Map;
 
 import code.com.movie_based_app.MovieApp;
 import code.com.movie_based_app.R;
+import code.com.movie_based_app.activities.BookSearchActivity;
+import code.com.movie_based_app.activities.MovieDetailActivity;
+import code.com.movie_based_app.activities.TopMovieDetailActivity;
+import code.com.movie_based_app.adapter.HotMovieAdapter;
 import code.com.movie_based_app.adapter.MovieAdapter;
 import code.com.movie_based_app.adapter.SpacesItemDecoration;
-import code.com.movie_based_app.base.BaseCustomAdapter;
-import code.com.movie_based_app.base.BaseGridViewHolder;
 import code.com.movie_based_app.bean.Movie;
-import code.com.movie_based_app.bean.MovieSubject;
 import code.com.movie_based_app.http.Error;
-import code.com.movie_based_app.http.ObjectLoader;
-import code.com.movie_based_app.http.RetrofitManager;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
-import rx.Observable;
+import code.com.movie_based_app.listener.AutoLoadListener;
 import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * Created by lihui1 on 2017/12/14.
@@ -47,13 +45,15 @@ public class MovieFragment extends Fragment{
     private GridView sGridView, mGridView;
     private RecyclerView mMovieRecyclerView;
     private MovieAdapter mMovieAdapter;
-    private SimpleAdapter mSimpleAdapter;
-    private MovieLoader mMovieLoader;
+    private HotMovieAdapter mHotMovieAdapter;
     public int width;
     public LinearLayout.LayoutParams layoutParams;
     public int count = 12;
     public int counts = 12;
     public ArrayList<Map<String, Object>> data;
+
+    private EditText mEdit_Search;
+    private Button mBtn_Search;
 
     private int sub_titles[] = {R.string.me_history, R.string.me_collection,R.string.me_offline,
             R.string.me_wallet,R.string.me_order,R.string.me_game,R.string.me_upload,R.string.me_subscribe,
@@ -62,19 +62,26 @@ public class MovieFragment extends Fragment{
             R.drawable.me_wallet,R.drawable.me_order, R.drawable.me_games,
             R.drawable.me_upload, R.drawable.me_subs, R.drawable.me_skin,
             R.drawable.me_movie,R.drawable.me_setting, R.drawable.me_feedback};
+
+    AutoLoadListener.AutoLoadCallback callback = new AutoLoadListener.AutoLoadCallback() {
+        @Override
+        public void upToLoad() {
+            Log.d("TAG", "***");
+        }
+    };
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
         sGridView = (GridView) view.findViewById(R.id.sub_grid);
         mGridView = (GridView) view.findViewById(R.id.grid);
+        AutoLoadListener autoLoadListener = new AutoLoadListener(callback);
+        mGridView.setOnScrollListener(autoLoadListener);
         width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
 
         switch (count % 3){
@@ -89,9 +96,6 @@ public class MovieFragment extends Fragment{
                 break;
         }
         sGridView.setAdapter(new GridAdapter(getData()));
-
-        /*电影列表*/
-        mMovieLoader = new MovieLoader();
         mMovieRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_movie);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -101,6 +105,16 @@ public class MovieFragment extends Fragment{
         mMovieRecyclerView.addItemDecoration(new SpacesItemDecoration(10));
         getMovieList();
 
+        mEdit_Search = (EditText) view.findViewById(R.id.edit_search);
+        mBtn_Search = (Button) view.findViewById(R.id.btn_search);
+        mBtn_Search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), BookSearchActivity.class);
+                intent.putExtra("key", mEdit_Search.getText().toString());
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -170,42 +184,21 @@ public class MovieFragment extends Fragment{
     }
 
     /**
-     * 获取电影列表
+     * 获取Top250电影列表
      */
     private void getMovieList(){
-        mMovieLoader.getMovie(0,6).subscribe(new Action1<List<Movie>>() {
+        MovieApp.getMovieLoader().getMovie(0,6).subscribe(new Action1<List<Movie>>() {
             @Override
             public void call(List<Movie> movies) {
                 mMovieAdapter.setMovies(movies);
+                mMovieAdapter.setOnItemClickListener(new MovieAdapter.OnItemClickListener() {
+                    @Override
+                    public void OnItemClick(int position) {
+                        Intent intent = new Intent(getActivity(), TopMovieDetailActivity.class);
+                        startActivity(intent);
+                    }
+                });
                 mMovieAdapter.notifyDataSetChanged();
-
-//                mSimpleAdapter = new SimpleAdapter(movies, MovieApp.getAppContext());
-//                mGridView.setAdapter(mSimpleAdapter);
-//                mSimpleAdapter.notifyDataSetChanged();
-            }
-        }, new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
-                Log.e("TAG","error message:"+throwable.getMessage());
-                if(throwable instanceof Error){
-                    Error fault = (Error) throwable;
-                    if(fault.getErrorCode() == 404){
-                        //错误处理
-                    }else if(fault.getErrorCode() == 500){
-                        //错误处理
-                    }else if(fault.getErrorCode() == 501){
-                        //错误处理
-                    }
-                }
-            }
-        });
-
-        mMovieLoader.getHotMovie().subscribe(new Action1<List<Movie>>() {
-            @Override
-            public void call(List<Movie> movies) {
-                mSimpleAdapter = new SimpleAdapter(movies, MovieApp.getAppContext());
-                mGridView.setAdapter(mSimpleAdapter);
-                mSimpleAdapter.notifyDataSetChanged();
             }
         }, new Action1<Throwable>() {
             @Override
@@ -222,63 +215,39 @@ public class MovieFragment extends Fragment{
                 }
             }
         });
-
-    }
-
-    public class MovieLoader extends ObjectLoader{
-        private MovieService mMovieService;
-
-        public MovieLoader(){
-            mMovieService = RetrofitManager.getInstance().create(MovieService.class);
-        }
-
         /**
-         * 获取Top250电影列表
-         * @param start
-         * @param count
-         * @return
+         * 获取热映电影列表
          */
-        public Observable<List<Movie>> getMovie(int start, int count){
-            return observe(mMovieService.getTop250(start,count))
-                    .map(new Func1<MovieSubject, List<Movie>>() {
-                        @Override
-                        public List<Movie> call(MovieSubject movieSubject) {
-                            return movieSubject.subjects;
-                        }
-                    });
-        }
-
-        public Observable<List<Movie>> getHotMovie(){
-            return observe(mMovieService.getHot()).map(new Func1<MovieSubject, List<Movie>>() {
-                @Override
-                public List<Movie> call(MovieSubject movieSubject) {
-                    return movieSubject.subjects;
+        MovieApp.getMovieLoader().getHotMovie().subscribe(new Action1<List<Movie>>() {
+            @Override
+            public void call(final List<Movie> movies) {
+                mHotMovieAdapter = new HotMovieAdapter(movies, MovieApp.getAppContext());
+                mGridView.setAdapter(mHotMovieAdapter);
+                mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
+                        intent.putExtra("id", movies.get(position).id);
+                        intent.putExtra("title", movies.get(position).title);
+                        startActivity(intent);
+                    }
+                });
+                mHotMovieAdapter.notifyDataSetChanged();
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+                if(throwable instanceof Error){
+                    Error fault = (Error) throwable;
+                    if(fault.getErrorCode() == 404){
+                        //错误处理
+                    }else if(fault.getErrorCode() == 500){
+                        //错误处理
+                    }else if(fault.getErrorCode() == 501){
+                        //错误处理
+                    }
                 }
-            });
-        }
+            }
+        });
     }
-
-    public interface MovieService{
-        //获取豆瓣Top250 榜单
-        @GET("top250")
-        Observable<MovieSubject> getTop250(@Query("start") int start, @Query("count")int count);
-        /*获取正在热映电影列表*/
-        @GET("in_theaters")
-        Observable<MovieSubject> getHot();
-    }
-
-    class SimpleAdapter extends BaseCustomAdapter<Movie> {
-        public SimpleAdapter(List list, Context context){
-            super(list, context, R.layout.movie_grid_view);
-        }
-
-
-        @Override
-        public void bindData(BaseGridViewHolder holder, Movie t) {
-            Log.d("TAG", "---"+t.images.small);
-            holder.setText(R.id.tv2, t.title)
-                    .setImageResources(t.images.small, R.id.img).setWeightAndHeight(R.id.container, 3,4);
-        }
-    }
-
 }

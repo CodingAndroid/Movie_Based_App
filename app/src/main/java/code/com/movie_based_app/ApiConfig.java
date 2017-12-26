@@ -7,4 +7,8 @@ package code.com.movie_based_app;
 public class ApiConfig {
 
     public static final String BASE_URL = "https://api.douban.com/v2/movie/";
+
+    public static final String BASE_MOBILE = "https://movie.douban.com/subject/";
+
+    public static final String SEARCH_BOOK = "https://api.douban.com/v2/book/search";
 }

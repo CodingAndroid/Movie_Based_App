@@ -1,6 +1,5 @@
 package code.com.movie_based_app.adapter;
 
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +21,13 @@ import code.com.movie_based_app.bean.Movie;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
     private List<Movie> mMovies;
+    public interface OnItemClickListener{
+        void OnItemClick(int position);
+    }
+    private OnItemClickListener mOnItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.mOnItemClickListener = onItemClickListener;
+    }
     public void  setMovies(List<Movie> list){
         mMovies = list;
     }
@@ -34,9 +40,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Movie movie = mMovies.get(position);
         holder.title.setText(movie.title);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                mOnItemClickListener.OnItemClick(position);
+            }
+        });
         Glide.with(MovieApp.getAppContext())
                 .load(movie.images.small)
                 .into(holder.mImageView);
