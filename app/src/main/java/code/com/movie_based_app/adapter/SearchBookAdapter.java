@@ -8,7 +8,6 @@ import code.com.movie_based_app.R;
 import code.com.movie_based_app.mvp.model.SearchBook;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
