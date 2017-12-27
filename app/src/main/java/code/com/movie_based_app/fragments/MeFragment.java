@@ -7,10 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,7 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import code.com.movie_based_app.MovieApp;
 import code.com.movie_based_app.R;
+import code.com.movie_based_app.widgets.LoginDialog;
 
 
 /**
@@ -47,6 +52,7 @@ public class MeFragment extends Fragment{
             R.drawable.credit_card, R.drawable.ant_fortune, R.drawable.tao_tickets,
             R.drawable.bike_sharing,R.drawable.uraban_service, R.drawable.more};
 
+    private Button mBtn_Login;
 
 
     @Override
@@ -57,10 +63,21 @@ public class MeFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_me, container, false);
+        final View view = inflater.inflate(R.layout.fragment_me, container, false);
         mGridView = (GridView) view.findViewById(R.id.main_grid);
-
-
+        mBtn_Login = (Button) view.findViewById(R.id.login);
+        mBtn_Login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginDialog loginDialog = new LoginDialog(getActivity(), R.style.Dialog_Login);
+                loginDialog.show();
+                WindowManager windowManager = getActivity().getWindowManager();
+                Display display = windowManager.getDefaultDisplay();
+                WindowManager.LayoutParams lp = loginDialog.getWindow().getAttributes();
+                lp.width = (int)(display.getWidth()); //设置宽度
+                loginDialog.getWindow().setAttributes(lp);
+            }
+        });
         width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
         switch (sum % 4){
             case 0:
