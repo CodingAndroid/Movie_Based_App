@@ -2,6 +2,8 @@ package code.com.movie_based_app;
 
 import android.app.Application;
 
+import com.activeandroid.ActiveAndroid;
+
 import code.com.movie_based_app.fragments.MovieFragment;
 import code.com.movie_based_app.http.MovieLoader;
 
@@ -20,6 +22,13 @@ public class MovieApp extends Application{
     public void onCreate() {
         super.onCreate();
         mMovieApp = this;
+        ActiveAndroid.initialize(this);
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        ActiveAndroid.dispose();
     }
 
     public static MovieApp getAppContext(){

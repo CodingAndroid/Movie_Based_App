@@ -1,5 +1,6 @@
 package code.com.movie_based_app.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.ProcessingInstruction;
@@ -28,6 +30,7 @@ import java.util.Map;
 
 import code.com.movie_based_app.MovieApp;
 import code.com.movie_based_app.R;
+import code.com.movie_based_app.activities.PersonPageActivity;
 import code.com.movie_based_app.widgets.LoginDialog;
 
 
@@ -38,6 +41,7 @@ import code.com.movie_based_app.widgets.LoginDialog;
 public class MeFragment extends Fragment{
 
     private GridView mGridView;
+    private RelativeLayout mContainer;
     public int width;
     public LinearLayout.LayoutParams layoutParams;
     public int sum = 12;
@@ -65,6 +69,15 @@ public class MeFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_me, container, false);
         mGridView = (GridView) view.findViewById(R.id.main_grid);
+        mContainer = (RelativeLayout) view.findViewById(R.id.rl_container);
+        mContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //person_page
+                Intent intent = new Intent(getActivity(), PersonPageActivity.class);
+                startActivity(intent);
+            }
+        });
         mBtn_Login = (Button) view.findViewById(R.id.login);
         mBtn_Login.setOnClickListener(new View.OnClickListener() {
             @Override

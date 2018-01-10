@@ -10,12 +10,20 @@
     <application
         android:name=".MovieApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon_a"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_icon_a"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".activities.MainActivity"
+        <meta-data
+            android:name="DB_NAME"
+            android:value="movie.db" />
+        <meta-data
+            android:name="DB_VERSION"
+            android:value="1" />
+
+        <activity
+            android:name=".activities.MainActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +36,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activities.MovieDetailActivity" />
         <activity android:name=".activities.TopMovieDetailActivity" />
-        <activity android:name=".activities.BookSearchActivity"></activity>
+        <activity android:name=".activities.BookSearchActivity" />
+        <activity android:name=".activities.PersonPageActivity"></activity>
     </application>
 
 </manifest>
