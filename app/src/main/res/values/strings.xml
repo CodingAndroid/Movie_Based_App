@@ -45,12 +45,4 @@
     <string name="movie_hot">正在热映</string>
 
     <string name="me_toolbar">我的</string>
-
-    <string name="me_column">我的栏目</string>
-    <string name="me_ask">我的提问</string>
-    <string name="me_answer">我的回答</string>
-
-    <string name="me_collect">我的收藏</string>
-    <string name="me_prasie">我的点赞</string>
-    <string name="me_oppose">我的反对</string>
 </resources>

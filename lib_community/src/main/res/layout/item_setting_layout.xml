@@ -6,7 +6,6 @@
         android:id="@+id/iv_set_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/answer"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
         android:padding="10dp"

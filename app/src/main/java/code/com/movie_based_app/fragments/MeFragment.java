@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import code.com.lib_community.fragments.PersonPageFragment;
 import code.com.movie_based_app.MovieApp;
 import code.com.movie_based_app.R;
 import code.com.movie_based_app.activities.PersonPageActivity;
@@ -76,6 +78,10 @@ public class MeFragment extends Fragment{
                 //person_page
                 Intent intent = new Intent(getActivity(), PersonPageActivity.class);
                 startActivity(intent);
+                //如果是用的v4的包，则用getActivity().getSuppoutFragmentManager();
+//                FragmentManager fm = getActivity().getSupportFragmentManager();
+//                Fragment fragment = new PersonPageFragment();
+//                fm.beginTransaction().replace(R.id.container, fragment).commit();
             }
         });
         mBtn_Login = (Button) view.findViewById(R.id.login);

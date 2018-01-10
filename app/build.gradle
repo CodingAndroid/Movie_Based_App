@@ -55,4 +55,6 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.6.1'
     /*db*/
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+    /**/
+    implementation project(':lib_community')
 }
