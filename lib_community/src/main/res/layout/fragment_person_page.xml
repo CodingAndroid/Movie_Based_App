@@ -3,129 +3,193 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
-    <ImageView
+    android:background="@color/gray">
+    <RelativeLayout
+        android:id="@+id/top_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/b"
-        android:scaleType="fitStart"/>
-    <ImageView
-        android:id="@+id/back"
-        android:onClick="back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/back"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"/>
-    <com.github.siyamed.shapeimageview.CircularImageView
-        android:id="@+id/per_face"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:siBorderColor="@color/white"
-        app:siBorderWidth="3dp"
-        android:src="@drawable/face"
-        android:layout_marginTop="138dp"
-        android:layout_centerHorizontal="true"/>
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_below="@+id/per_face"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="王振宁"
-        android:textSize="18sp"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/main_black"
-        android:layout_centerHorizontal="true"/>
-    <TextView
-        android:id="@+id/user_content"
-        android:layout_below="@+id/user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="一个爱做梦的现实主义青年"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/main_gray"
-        android:layout_centerHorizontal="true"/>
+        android:background="@color/white">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/person_bg" />
+        <ImageView
+            android:id="@+id/back"
+            android:onClick="back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"/>
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/per_face"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:siBorderColor="@color/white"
+            app:siBorderWidth="3dp"
+            android:src="@drawable/face"
+            android:layout_marginTop="170dp"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
     <LinearLayout
-        android:id="@+id/f_moudle"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_below="@+id/user_content"
+        android:id="@+id/user_container"
+        android:layout_below="@id/top_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:background="@color/white">
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_below="@+id/top_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="王振宁"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/main_black"
+            android:gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/user_content"
+            android:layout_below="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="一个爱做梦的现实主义青年"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/main_gray"
+            android:gravity="center_horizontal" />
+
         <LinearLayout
-            android:layout_below="@+id/user_content"
+            android:id="@+id/f_moudle"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/user_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_weight="1"
-            android:gravity="center_horizontal">
-            <TextView
-                android:layout_width="wrap_content"
+            android:background="@color/white">
+            <LinearLayout
+                android:layout_below="@+id/user_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="获赞"/>
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="获赞"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="43"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_below="@+id/user_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="被反对"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_below="@+id/user_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="被分享"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_below="@+id/user_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="被收藏"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/t_moudle"
+        android:layout_below="@id/user_container"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white">
+        <LinearLayout
+            android:id="@+id/fans"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1.0"
+            android:gravity="center_horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="43"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="粉丝" />
         </LinearLayout>
+        <View
+            android:layout_width="2.0dp"
+            android:layout_marginTop="2.0dp"
+            android:layout_marginBottom="2.0dp"
+            android:background="@color/gray"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"/>
         <LinearLayout
-            android:layout_below="@+id/user_content"
+            android:id="@+id/cares"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_weight="1.0"
             android:gravity="center_horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="被反对"/>
+                android:text="43" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="12"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_below="@+id/user_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:gravity="center_horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="被分享"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_below="@+id/user_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:gravity="center_horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="被收藏"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12"/>
+                android:text="关注" />
         </LinearLayout>
     </LinearLayout>
 
     <ScrollView
-        android:layout_below="@+id/f_moudle"
+        android:layout_below="@+id/t_moudle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray"
-        android:paddingTop="8dp">
+        android:background="@color/gray">
         <code.com.lib_community.widgets.SettingLayout
             android:id="@+id/set_layout"
             android:background="@color/white"

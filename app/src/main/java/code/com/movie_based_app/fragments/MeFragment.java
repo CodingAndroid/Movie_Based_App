@@ -33,6 +33,7 @@ import code.com.lib_community.fragments.PersonPageFragment;
 import code.com.movie_based_app.MovieApp;
 import code.com.movie_based_app.R;
 import code.com.movie_based_app.activities.PersonPageActivity;
+import code.com.movie_based_app.adapter.CommonGridAdapter;
 import code.com.movie_based_app.widgets.LoginDialog;
 
 
@@ -44,19 +45,15 @@ public class MeFragment extends Fragment{
 
     private GridView mGridView;
     private RelativeLayout mContainer;
-    public int width;
-    public LinearLayout.LayoutParams layoutParams;
-    public int sum = 12;
-    public int sums = 12;
 
     public ArrayList<Map<String, Object>> data;
-    private int titles[] = {R.string.huabei, R.string.transfer_accounts,R.string.re_charge,
-            R.string.tickets,R.string.yu_ebao,R.string.express,R.string.credit_card,R.string.ant_fortune,
-            R.string.tao_ticket,R.string.bike_sharing,R.string.urban_service, R.string.more};
-    private int image_icons[] = {R.drawable.huabei, R.drawable.transfer_accounts,R.drawable.recharge,
-            R.drawable.tickets,R.drawable.yu_e_bao, R.drawable.express,
-            R.drawable.credit_card, R.drawable.ant_fortune, R.drawable.tao_tickets,
-            R.drawable.bike_sharing,R.drawable.uraban_service, R.drawable.more};
+    private int titles[] = {R.string.me_history, R.string.me_collection,R.string.me_offline,
+            R.string.me_wallet,R.string.me_order,R.string.me_game,R.string.me_upload,R.string.me_subscribe,
+            R.string.me_skin,R.string.me_movie,R.string.me_setting, R.string.me_feedback};
+    private int image_icons[] = {R.drawable.me_history, R.drawable.me_collection,R.drawable.me_offline,
+            R.drawable.me_wallet,R.drawable.me_order, R.drawable.me_games,
+            R.drawable.me_upload, R.drawable.me_subs, R.drawable.me_skin,
+            R.drawable.me_movie,R.drawable.me_setting, R.drawable.me_feedback};
 
     private Button mBtn_Login;
 
@@ -97,22 +94,7 @@ public class MeFragment extends Fragment{
                 loginDialog.getWindow().setAttributes(lp);
             }
         });
-        width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-        switch (sum % 4){
-            case 0:
-                sums = sum;
-                break;
-            case 1:
-                sums = sum+3;
-                break;
-            case 2:
-                sums = sum+2;
-                break;
-            case 3:
-                sums = sum+1;
-                break;
-        }
-        mGridView.setAdapter(new MyAdapter(getData()));
+        mGridView.setAdapter(new CommonGridAdapter(getData(), getActivity()));
         return view;
     }
 
@@ -127,58 +109,4 @@ public class MeFragment extends Fragment{
         }
         return data;
     }
-
-    class Handler{
-        public LinearLayout linearLayout;
-        public ImageView imageView;
-        public TextView textView;
-    }
-    class MyAdapter extends BaseAdapter {
-        private ArrayList<Map<String, Object>> mList;
-
-        public MyAdapter(ArrayList<Map<String, Object>> list) {
-            this.mList = list;
-        }
-
-        @Override
-        public int getCount() {
-            return sums;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return sums;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return sums;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            Handler handler;
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.item_gridview, null);
-                handler = new Handler();
-                handler.linearLayout = (LinearLayout) convertView.findViewById(R.id.item_linear);
-                handler.imageView = (ImageView) convertView.findViewById(R.id.item_image);
-                handler.textView = (TextView) convertView.findViewById(R.id.item_text);
-                convertView.setTag(handler);
-            }
-            handler = (Handler) convertView.getTag();
-            layoutParams = (LinearLayout.LayoutParams) handler.linearLayout.getLayoutParams();
-            int w = (width - 3) / 4;
-            layoutParams.width = w;
-            layoutParams.height = w;
-            handler.linearLayout.setLayoutParams(layoutParams);
-            if (position < sum) {
-                handler.imageView.setImageResource((Integer) mList.get(position).get("image_icons"));
-                handler.textView.setText((Integer) mList.get(position).get("titles"));
-            }
-
-            return convertView;
-        }
-    }
-
 }

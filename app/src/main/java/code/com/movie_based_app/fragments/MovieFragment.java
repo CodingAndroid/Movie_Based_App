@@ -29,6 +29,7 @@ import code.com.movie_based_app.R;
 import code.com.movie_based_app.activities.BookSearchActivity;
 import code.com.movie_based_app.activities.MovieDetailActivity;
 import code.com.movie_based_app.activities.TopMovieDetailActivity;
+import code.com.movie_based_app.adapter.CommonGridAdapter;
 import code.com.movie_based_app.adapter.HotMovieAdapter;
 import code.com.movie_based_app.adapter.MovieAdapter;
 import code.com.movie_based_app.adapter.SpacesItemDecoration;
@@ -46,22 +47,18 @@ public class MovieFragment extends Fragment{
     private RecyclerView mMovieRecyclerView;
     private MovieAdapter mMovieAdapter;
     private HotMovieAdapter mHotMovieAdapter;
-    public int width;
-    public LinearLayout.LayoutParams layoutParams;
-    public int count = 12;
-    public int counts = 12;
     public ArrayList<Map<String, Object>> data;
 
     private EditText mEdit_Search;
     private Button mBtn_Search;
 
-    private int sub_titles[] = {R.string.me_history, R.string.me_collection,R.string.me_offline,
-            R.string.me_wallet,R.string.me_order,R.string.me_game,R.string.me_upload,R.string.me_subscribe,
-            R.string.me_skin,R.string.me_movie,R.string.me_setting, R.string.me_feedback};
-    private int sub_image_icons[] = {R.drawable.me_history, R.drawable.me_collection,R.drawable.me_offline,
-            R.drawable.me_wallet,R.drawable.me_order, R.drawable.me_games,
-            R.drawable.me_upload, R.drawable.me_subs, R.drawable.me_skin,
-            R.drawable.me_movie,R.drawable.me_setting, R.drawable.me_feedback};
+    private int sub_titles[] = {R.string.huabei, R.string.transfer_accounts,R.string.re_charge,
+            R.string.tickets,R.string.yu_ebao,R.string.express,R.string.credit_card,R.string.ant_fortune,
+            R.string.tao_ticket,R.string.bike_sharing,R.string.urban_service, R.string.more};
+    private int sub_image_icons[] = {R.drawable.huabei, R.drawable.transfer_accounts,R.drawable.recharge,
+            R.drawable.tickets,R.drawable.yu_e_bao, R.drawable.express,
+            R.drawable.credit_card, R.drawable.ant_fortune, R.drawable.tao_tickets,
+            R.drawable.bike_sharing,R.drawable.uraban_service, R.drawable.more};
 
     AutoLoadListener.AutoLoadCallback callback = new AutoLoadListener.AutoLoadCallback() {
         @Override
@@ -82,20 +79,7 @@ public class MovieFragment extends Fragment{
         mGridView = (GridView) view.findViewById(R.id.grid);
         AutoLoadListener autoLoadListener = new AutoLoadListener(callback);
         mGridView.setOnScrollListener(autoLoadListener);
-        width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-
-        switch (count % 3){
-            case 0:
-                counts = count;
-                break;
-            case 1:
-                counts = count+3;
-                break;
-            case 2:
-                counts = count+2;
-                break;
-        }
-        sGridView.setAdapter(new GridAdapter(getData()));
+        sGridView.setAdapter(new CommonGridAdapter(getData(), getActivity()));
         mMovieRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_movie);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -123,65 +107,13 @@ public class MovieFragment extends Fragment{
         Map<String, Object> map;
         for (int i = 0; i<12; i++){
             map = new HashMap<>();
-            map.put("sub_image_icons", sub_image_icons[i]);
-            map.put("sub_titles", sub_titles[i]);
+            map.put("image_icons", sub_image_icons[i]);
+            map.put("titles", sub_titles[i]);
             data.add(map);
         }
         return data;
     }
 
-    class ViewHolder{
-        public LinearLayout linearLayout;
-        public ImageView imageView;
-        public TextView textView;
-    }
-    class GridAdapter extends BaseAdapter {
-        private ArrayList<Map<String, Object>> mList;
-
-        public GridAdapter(ArrayList<Map<String, Object>> list) {
-            this.mList = list;
-        }
-
-        @Override
-        public int getCount() {
-            return counts;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return counts;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return counts;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder;
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.item_gridview, null);
-                viewHolder = new ViewHolder();
-                viewHolder.linearLayout = (LinearLayout) convertView.findViewById(R.id.item_linear);
-                viewHolder.imageView = (ImageView) convertView.findViewById(R.id.item_image);
-                viewHolder.textView = (TextView) convertView.findViewById(R.id.item_text);
-                convertView.setTag(viewHolder);
-            }
-            viewHolder = (ViewHolder) convertView.getTag();
-            layoutParams = (LinearLayout.LayoutParams) viewHolder.linearLayout.getLayoutParams();
-            int w = (width - 2) / 3;
-            layoutParams.width = w;
-            layoutParams.height = (width - 3) / 6;
-            viewHolder.linearLayout.setLayoutParams(layoutParams);
-            if (position < count) {
-                viewHolder.imageView.setImageResource((Integer) mList.get(position).get("sub_image_icons"));
-                viewHolder.textView.setText((Integer) mList.get(position).get("sub_titles"));
-            }
-
-            return convertView;
-        }
-    }
 
     /**
      * 获取Top250电影列表

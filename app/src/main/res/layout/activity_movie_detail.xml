@@ -26,6 +26,8 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="30sp"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="hello"/>
         <ImageView
             android:layout_width="wrap_content"

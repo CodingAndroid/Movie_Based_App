@@ -51,8 +51,8 @@
         android:paddingBottom="1dp"
         android:id="@+id/sub_grid"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:numColumns="3"
+        android:layout_height="wrap_content"
+        android:numColumns="4"
         android:background="@color/gray"
         android:horizontalSpacing="1dp"
         android:verticalSpacing="1dp"/>

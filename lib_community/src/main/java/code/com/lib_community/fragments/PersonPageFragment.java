@@ -74,7 +74,7 @@ public class PersonPageFragment extends Fragment{
         };
         for (SettingLayout.Item item : items){
             if (item.titleStrId == R.string.me_column){
-
+                mSetLayout.addHeadTips("");
             }
             if (item.titleStrId == R.string.me_collect){
                 mSetLayout.addHeadTips("");
