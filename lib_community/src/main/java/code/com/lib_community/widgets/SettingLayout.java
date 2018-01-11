@@ -16,8 +16,8 @@ import android.widget.Space;
 import android.widget.TextView;
 
 import code.com.lib_community.R;
-import code.com.movie_based_app.utils.UscreenUtil;
-import code.com.movie_based_app.utils.ViewUtil;
+import code.com.lib_community.utils.UscreenUtil;
+import code.com.lib_community.utils.ViewUtil;
 
 /**
  * Created by lihui1 on 2018/1/10.
